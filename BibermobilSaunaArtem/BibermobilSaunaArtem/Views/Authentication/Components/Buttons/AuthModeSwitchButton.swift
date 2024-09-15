@@ -35,9 +35,12 @@ struct AuthModeSwitchButton: View {
         Button(action: action) {
             // Text, der auf dem Button angezeigt wird
             Text(title)
-                .font(Fonts.title1) // Setzt die Schriftart auf "title1" (eine vordefinierte Schriftart)
+                .font(.title) // Setzt die Schriftart auf "title1" (eine vordefinierte Schriftart)
+                .foregroundStyle(.yellow)
                 .frame(maxWidth: .infinity) // Der Text nimmt die maximale verfügbare Breite ein
+                .background(.green)
         }
+        .cornerRadius(16)
     }
 }
 
@@ -59,11 +62,11 @@ extension AuthModeSwitchButton {
            - cityViewModel: Das `CityViewModel`-Objekt, das die Suchlogik und -daten für Städte verwaltet.
          - Returns: Ein `AuthModeSwitchButton`, der die Authentifizierungsmodi wechselt und das Textfeld für den Wohnort leert.
          */
-    @MainActor static func switchModeButton(userViewModel: UserViewModel, cityViewModel: CityViewModel) -> AuthModeSwitchButton {
+    @MainActor static func switchModeButton(userViewModel: UserViewModel) -> AuthModeSwitchButton {
         return AuthModeSwitchButton(title: userViewModel.mode.alternativeTitle) {
             withAnimation(.spring(response: 0.5, dampingFraction: 0.6, blendDuration: 1)) {
                 userViewModel.switchAuthenticationMode()
-                cityViewModel.clearSearchText()// Wechselt den Authentifizierungsmodus im ViewModel
+               
             }
         }
     }

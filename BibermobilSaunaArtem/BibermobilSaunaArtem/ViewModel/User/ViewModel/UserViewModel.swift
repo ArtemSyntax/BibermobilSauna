@@ -54,8 +54,12 @@ class UserViewModel: ObservableObject {
     
     @Published var user: FireUser?
     @Published var mode: AuthenticationMode = .login
-    @Published var name: String = ""
+    @Published var email: String = ""
+    @Published var fullname: String = ""
     @Published var city: String = ""
+    @Published var postalCode: String = ""
+    @Published var street: String = ""
+    @Published var houseNumber: String = ""
     @Published var password: String = ""
     @Published var confirmPassword: String = ""
     @Published var errorMessage: String = ""
@@ -76,9 +80,9 @@ class UserViewModel: ObservableObject {
     /// Gibt an, ob die Authentifizierung deaktiviert ist.
     var disableAuthentication: Bool {
         if mode == .register {
-            return name.isEmpty || password.isEmpty || confirmPassword.isEmpty || password != confirmPassword
+            return email.isEmpty || password.isEmpty || confirmPassword.isEmpty || password != confirmPassword
         } else {
-            return name.isEmpty || password.isEmpty
+            return email.isEmpty || password.isEmpty
         }
     }
     
@@ -89,7 +93,7 @@ class UserViewModel: ObservableObject {
     
     /// Gibt den Benutzernamen des aktuell authentifizierten Benutzers zurück.
     var nameDisplay: String {
-        user?.name ?? ""
+        user?.fullname ?? ""
     }
     
     // MARK: - Functions
@@ -101,18 +105,14 @@ class UserViewModel: ObservableObject {
      - username: Der Benutzername oder die E-Mail-Adresse.
      - password: Das Passwort.
      */
-    
-    func login(username: String, password: String) {
-        let email = formatEmail(username)
-        
+    func login(email: String, password: String) {
+        let trimmedEmail = email.trimmingCharacters(in: .whitespacesAndNewlines)
         
         // Versucht, den Benutzer mit der angegebenen E-Mail und Passwort anzumelden
-        firebaseManager.auth.signIn(withEmail: email, password: password) { [weak self] authResult, error in
+        firebaseManager.auth.signIn(withEmail: trimmedEmail, password: password) { [weak self] authResult, error in
             guard let self = self else { return }
             if let error = error as NSError? {
-                
                 self.handleAuthError(error)
-                
                 return
             }
             
@@ -120,7 +120,6 @@ class UserViewModel: ObservableObject {
             
             // Ruft die Benutzerdaten nach erfolgreicher Authentifizierung ab
             self.fetchUser(with: authResult.user.uid)
-            
         }
     }
     
@@ -133,28 +132,23 @@ class UserViewModel: ObservableObject {
      - password: Das Passwort.
      */
     
-    func register(name: String,city:String,  username: String, password: String) {
-        let email = formatEmail(username)
-        
-        
+    
+    func register(fullname: String, city: String, postalcode: String, street: String, housenumber: Int, email: String, password: String) {
         // Versucht, einen neuen Benutzer mit der angegebenen E-Mail und Passwort zu erstellen
         firebaseManager.auth.createUser(withEmail: email, password: password) { [weak self] authResult, error in
             guard let self = self else { return }
             if let error = error as NSError? {
-                
                 self.handleAuthError(error)
-                
                 return
             }
-            
+
             guard let authResult = authResult else { return }
-            
+
             // Erstellt einen neuen Benutzereintrag in der Firestore-Datenbank
-            self.createUser(with: authResult.user.uid, name: name,city:city)
-            
+            self.createUser(with: authResult.user.uid, email: email, fullname: fullname, city: city, postalCode: postalcode, street: street, houseNumber: housenumber)
+
             // Meldet den neu registrierten Benutzer direkt an
-            self.login(username: username, password: password)
-            
+            self.login(email: email, password: password)
         }
     }
     
@@ -197,23 +191,33 @@ class UserViewModel: ObservableObject {
         
     }
     
-    /// Führt die Authentifizierung basierend auf dem aktuellen Modus aus.
     func authenticate() {
-        let username = name.trimmingCharacters(in: .whitespacesAndNewlines)
-        let formattedEmail = formatEmail(username)
+        let trimmedEmail = email.trimmingCharacters(in: .whitespacesAndNewlines)
         
         switch mode {
         case .login:
-            login(username: formattedEmail, password: password)
+            login(email: trimmedEmail, password: password)
         case .register:
-            register(name: name,city:city , username: formattedEmail, password: password)
+            // Alle benötigten Felder für die Registrierung übergeben
+            register(
+                fullname: fullname,
+                city: city,
+                postalcode: postalCode,
+                street: street,
+                housenumber: Int(houseNumber) ?? 0, // Sicherstellen, dass housenumber konvertiert wird
+                email: trimmedEmail,
+                password: password
+            )
         }
     }
     
     /// Leert die Eingabefelder für die Authentifizierung.
+    ///
+    ///
+    // MUSS BEARBEITET WERDEN
     func clearFields() {
         
-        self.name = ""
+        self.email = ""
         self.city = ""
         self.password = ""
         self.confirmPassword = ""
@@ -237,25 +241,7 @@ class UserViewModel: ObservableObject {
     }
     
     
-    // MARK: - Private Functions
-    
-    
-    /**
-     Formatiert den Benutzernamen zu einer E-Mail-Adresse.
-     
-     - Parameter username: Der Benutzername.
-     - Returns: Die formatierte E-Mail-Adresse.
-     */
-    private func formatEmail(_ username: String) -> String {
-        let cleanedUsername = username.lowercased().trimmingCharacters(in: .whitespacesAndNewlines)
-        
-        if cleanedUsername.contains("@") {
-            return cleanedUsername
-        } else {
-            let validUsername = cleanedUsername.filter { "abcdefghijklmnopqrstuvwxyz0123456789._%+-".contains($0) }
-            return "\(validUsername)@mediguard.com"
-        }
-    }
+ 
     
 
     
@@ -291,18 +277,15 @@ extension UserViewModel {
      - id: Die Benutzer-ID.
      - name: Der Name des Benutzers.
      */
-    private func createUser(with id: String, name: String,city:String) {
-        let user = FireUser(id: id, name: name,city:city, registeredAt: Date())
-        
+    
+    
+    private func createUser(with id: String, email: String, fullname: String, city: String, postalCode: String, street: String, houseNumber: Int) {
+        let user = FireUser(id: id, email: email, fullname: fullname, city: city, postalcode: postalCode, street: street, housenumber: houseNumber, registeredAt: Date())
+
         do {
             try firebaseManager.database.collection("users").document(id).setData(from: user)
-            
-            
-            
         } catch let error {
-            
             self.errorMessage = "Fehler beim Speichern des Users: \(error)"
-            
         }
     }
     
@@ -312,7 +295,7 @@ extension UserViewModel {
      - Parameter error: Der aufgetretene Fehler.
      */
     private func handleAuthError(_ error: NSError) {
-        guard let errorCode = AuthErrorCode.Code(rawValue: error.code) else {
+        guard let errorCode = AuthErrorCode(rawValue: error.code) else {
             
             self.authenticationError = .unknownError
             self.errorMessage = "Ein unbekannter Fehler ist aufgetreten: \(error.localizedDescription)"

@@ -28,10 +28,18 @@ struct FireUser: Codable {
     /// Die eindeutige Benutzer-ID.
     var id: String
     
+    var email: String
+    
     /// Der Name des Benutzers.
-    var name: String
+    var fullname: String
     
     var city: String
+    
+    var postalcode : String
+    
+    var street : String
+    
+    var housenumber : Int
     
     /// Das Datum, an dem der Benutzer sich registriert hat.
     var registeredAt: Date
@@ -44,10 +52,14 @@ struct FireUser: Codable {
      - Parameter city: Der Wohnort des Benutzers.
      - Parameter registeredAt: Das Datum, an dem der Benutzer sich registriert hat.
      */
-    init(id: String, name: String,city: String, registeredAt: Date) {
+    init(id: String,email:String, fullname: String,city: String,postalcode: String ,street: String,housenumber: Int , registeredAt: Date) {
         self.id = id
-        self.name = name
+        self.email = email
+        self.fullname = fullname
         self.city = city
+        self.postalcode = postalcode
+        self.street = street
+        self.housenumber = housenumber
         self.registeredAt = registeredAt
         
     }

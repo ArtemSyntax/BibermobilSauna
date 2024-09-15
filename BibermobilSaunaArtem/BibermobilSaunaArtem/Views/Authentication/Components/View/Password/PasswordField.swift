@@ -29,8 +29,12 @@ struct PasswordField: View {
         ZStack {
             // Hintergrund des Passwortfelds
             RoundedRectangle(cornerRadius: 16)
-                .stroke(Color.blue, lineWidth: 2)
-                .frame(height: 50)
+                .fill(.ultraThinMaterial) // Verwende Material als Füllung
+                        .frame(height: 50)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 16)
+                                .stroke(Color.yellow, lineWidth: 2)
+                        )
             
             HStack {
                 // Bedingte Anzeige des Textfelds basierend auf `isVisible`
@@ -38,12 +42,14 @@ struct PasswordField: View {
                     // Normales Textfeld, wenn das Passwort sichtbar ist
                     TextField(title, text: $text)
                         .padding()
-                        .font(Fonts.headline)
+                        .font(.headline)
+                        .foregroundStyle(.black)
                 } else {
                     // Sicheres Textfeld, wenn das Passwort unsichtbar ist
                     SecureField(title, text: $text)
                         .padding()
-                        .font(Fonts.headline)
+                        .font(.headline)
+                        .foregroundStyle(.black)
                 }
                 // Button, um die Sichtbarkeit des Passworts umzuschalten
                 Button(action: {
@@ -51,7 +57,7 @@ struct PasswordField: View {
                 }) {
                     // Symbol, das die aktuelle Sichtbarkeit des Passworts anzeigt
                     Image(systemName: isVisible ? "eye.slash" : "eye")
-                        .foregroundStyle(.blue)
+                        .foregroundStyle(.yellow)
                 }
                 .padding(.trailing, 8)
             }

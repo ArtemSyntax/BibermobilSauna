@@ -31,15 +31,15 @@ struct AuthButton: View {
         Button(action: action) {
             // Text, der auf dem Button angezeigt wird
             Text(title)
-                .font(Fonts.body)
+                .font(.body)
                 .frame(maxWidth: .infinity)
-                .foregroundStyle(.white)
+                .foregroundStyle(.yellow)
                 
                 
         }
         
         .padding(.vertical, 12)
-        .background(Color.blue)
+        .background(Color.green)
         .cornerRadius(16)
     }
 }
@@ -52,7 +52,7 @@ extension AuthButton {
             // Überprüfung, ob die Authentifizierung deaktiviert ist
             if userViewModel.disableAuthentication {
                 // Fehlerbehandlung und entsprechende Fehlermeldungen
-                if userViewModel.name.isEmpty {
+                if userViewModel.email.isEmpty {
                     userViewModel.errorMessage = "Bitte geben Sie einen Namen ein."
                 }else if userViewModel.mode == .register && userViewModel.city.isEmpty {
                     userViewModel.errorMessage = "Bitte geben Sie eine Stadt ein."

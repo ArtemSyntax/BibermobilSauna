@@ -20,7 +20,8 @@
 		385BD7802C86C5C90085F402 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385BD77F2C86C5C90085F402 /* ContentView.swift */; };
 		385BD7822C86C5CA0085F402 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 385BD7812C86C5CA0085F402 /* Assets.xcassets */; };
 		385BD7852C86C5CA0085F402 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 385BD7842C86C5CA0085F402 /* Preview Assets.xcassets */; };
-		5BA873002C917084003F245A /* GoogleService-Info-4.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5BA872FF2C917084003F245A /* GoogleService-Info-4.plist */; };
+		5B2425292C970CB10092A92D /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B2425282C970CB10092A92D /* HomeView.swift */; };
+		5BA873002C917084003F245A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5BA872FF2C917084003F245A /* GoogleService-Info.plist */; };
 		5BA873032C9170F1003F245A /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 5BA873022C9170F1003F245A /* FirebaseAnalytics */; };
 		5BA873052C9170F1003F245A /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = 5BA873042C9170F1003F245A /* FirebaseAnalyticsOnDeviceConversion */; };
 		5BA873072C9170F1003F245A /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 5BA873062C9170F1003F245A /* FirebaseAnalyticsWithoutAdIdSupport */; };
@@ -61,7 +62,8 @@
 		385BD77F2C86C5C90085F402 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		385BD7812C86C5CA0085F402 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		385BD7842C86C5CA0085F402 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		5BA872FF2C917084003F245A /* GoogleService-Info-4.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-4.plist"; sourceTree = "<group>"; };
+		5B2425282C970CB10092A92D /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		5BA872FF2C917084003F245A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -218,6 +220,7 @@
 		381498182C880E9600DE2334 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				5B2425262C970C790092A92D /* Home */,
 				380F86A42C895BCB009E9D54 /* Authentication */,
 			);
 			path = Views;
@@ -241,7 +244,7 @@
 		385BD7712C86C5C90085F402 = {
 			isa = PBXGroup;
 			children = (
-				5BA872FF2C917084003F245A /* GoogleService-Info-4.plist */,
+				5BA872FF2C917084003F245A /* GoogleService-Info.plist */,
 				385BD77C2C86C5C90085F402 /* BibermobilSaunaArtem */,
 				385BD77B2C86C5C90085F402 /* Products */,
 			);
@@ -277,6 +280,22 @@
 				385BD7842C86C5CA0085F402 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		5B2425262C970C790092A92D /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				5B2425272C970C9F0092A92D /* View */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		5B2425272C970C9F0092A92D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				5B2425282C970CB10092A92D /* HomeView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -367,7 +386,7 @@
 			files = (
 				385BD7852C86C5CA0085F402 /* Preview Assets.xcassets in Resources */,
 				385BD7822C86C5CA0085F402 /* Assets.xcassets in Resources */,
-				5BA873002C917084003F245A /* GoogleService-Info-4.plist in Resources */,
+				5BA873002C917084003F245A /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -387,6 +406,7 @@
 				380F86B12C895CB5009E9D54 /* AuthModeSwitchButton.swift in Sources */,
 				380F869E2C8959E1009E9D54 /* UserViewModel.swift in Sources */,
 				380F86AC2C895C56009E9D54 /* PasswordField.swift in Sources */,
+				5B2425292C970CB10092A92D /* HomeView.swift in Sources */,
 				380F869A2C89599A009E9D54 /* AuthenticationError.swift in Sources */,
 				385BD77E2C86C5C90085F402 /* BibermobilSaunaArtemApp.swift in Sources */,
 			);
@@ -519,9 +539,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"BibermobilSaunaArtem/Preview Content\"";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -529,6 +551,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -536,6 +559,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = artem1.BibermobilSaunaArtem;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -547,9 +571,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"BibermobilSaunaArtem/Preview Content\"";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -557,6 +583,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -564,6 +591,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = artem1.BibermobilSaunaArtem;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
